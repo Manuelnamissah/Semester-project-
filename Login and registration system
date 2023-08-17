@@ -1,0 +1,157 @@
+#include <iostream>
+#include <fstream>
+#include <string.h>
+ 
+ using namespace std;
+
+ void login();
+ void registration();
+ void forgot();
+ 
+
+ int main()
+ {
+ 
+ int c;
+ cout<<"\t\t\t                            \n\n\n";
+ cout<<"\t\t\t             WELCOME           \n\n\n";
+ cout<<"\t\t\t              MENU               \n\n";
+ cout<<"                                    \n\n";
+ cout<<"\t| press 1 to Login |"<<endl;
+ cout<<"\t| press 2 to Register |"<<endl;
+ cout<<"\t| press 3 for Forgot password |"<<endl;
+ cout<<"\t| press 4 to Exit |"<<endl;
+ cout<<"\n\t\t\t PLEASE SELECT YOUR CHOICE :";
+ cin>>c;
+ cout<<endl;
+ 
+ switch(c)
+ {
+ case 1:
+ login();
+ break;
+ 
+ case 2:
+ registration();
+ break;
+ 
+ case 3:
+ forgot();
+ break;
+ 
+ case 4:
+ cout<<"\t\t\t THANK YOU! \n\n";
+ break;
+ default:
+ system("cls");
+ cout<<"\t\t\t select from the options given below \n"<<endl;
+ main();
+ 
+ }
+ 
+ }
+ 
+ void login()
+ {
+int count;
+ string userId,password,Id,pass;
+ system("cls");
+ cout<<"\t\t\t Enter username and password "<<endl;
+ cout<<"\t\t\t USERNAME ";
+ cin>>userId;
+ cout<<"\t\t\t PASSWORD ";
+ cin>>password;
+ 
+ ifstream input("records.txt");
+ 
+ while(input>>Id>>pass)
+ {
+ if(Id==userId && pass==password)
+ {
+ count=1;
+ system("cls");
+ }
+ }
+ input.close();
+ 
+ if(count==1)
+ {
+ cout<<userId<<"\n Login successful \n";
+ main();
+ }
+ else
+ {
+ cout<<"\n login error \n incorrect details ";
+ main();
+ }
+ }
+ void registration()
+ {
+ string ruserId,rpassword,rId,rpass;
+ system("cls");
+ cout<<"\t\t\t Enter Username :";
+ cin>>ruserId;
+ cout<<"\t\t\t Enter Password: ";
+ cin>>rpassword;
+ 
+ ofstream f1("records.txt",ios::app);
+ f1<<ruserId<<' '<<rpassword<<endl;
+ system("cls");
+ cout<<"\t\t\t Registration successful \n";
+ main();
+ 
+ }
+ void forgot()
+ {
+ int option;
+ system("cls");
+ cout<<"\t\t\t Forgot password \n";
+ cout<<"press 1 to search your Id by username"<<endl;
+ cout<<"press 2 to go back to main menu"<<endl;
+cout<<"\t\t\t select your choice ";
+ cin>>option;
+ switch(option)
+ {
+ 
+ case 1:
+ {
+ int count=0;
+ string suserId,spassword,sId,spass;
+ cout<<"\n\t\t\tenter the username which you remember :";
+ cin>>suserId;
+ 
+ ifstream f2("records.txt");
+ while(f2>>sId>>spass)
+ {
+ if(sId==suserId)
+ {
+ count=1;
+ }
+ }
+ f2.close();
+ if(count==1)
+ {
+ cout<<"\n\n Your account is found \n";
+ cout<<"\n\n your password is :"<<spass;
+ main();
+ }
+ else
+ {
+ cout<<"\n\t Sorry! your account is not found! \n";
+ main();
+ 
+ }
+ break;
+ }
+ 
+ case 2 :
+ {
+ main();
+ }
+ 
+ default:
+ cout<<"\t\t\t wrong choice ! please try again "<<endl;
+ forgot(); 
+ }
+ 
+ } 
